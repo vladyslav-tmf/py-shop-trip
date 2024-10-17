@@ -7,12 +7,18 @@ class Shop:
         self.location = location
         self.products = products
 
+    def calculate_single_product_cost(
+        self,
+        product: str,
+        amount: int
+    ) -> float:
+        return self.products.get(product) * amount
+
     def calculate_product_cost(self, product_cart: dict) -> float:
         total_cost = 0
 
         for product, amount in product_cart.items():
-            if product in self.products:
-                total_cost += self.products[product] * amount
+            total_cost += self.calculate_single_product_cost(product, amount)
         return total_cost
 
     def print_receipt(self, customer_name: str, product_cart: dict) -> None:
@@ -23,7 +29,7 @@ class Shop:
         print("You have bought:")
 
         for product, amount in product_cart.items():
-            cost = self.products[product] * amount
+            cost = self.calculate_single_product_cost(product, amount)
             formatted_cost = (f"{round(cost, 1)}" if cost % 1 != 0
                               else f"{int(cost)}")
             print(f"{amount} {product}s for {formatted_cost} dollars")
