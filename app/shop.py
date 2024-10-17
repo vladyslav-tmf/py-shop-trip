@@ -9,6 +9,7 @@ class Shop:
 
     def calculate_product_cost(self, product_cart: dict) -> float:
         total_cost = 0
+
         for product, amount in product_cart.items():
             if product in self.products:
                 total_cost += self.products[product] * amount
@@ -20,11 +21,13 @@ class Shop:
         )
         print(f"Thanks, {customer_name}, for your purchase!")
         print("You have bought:")
-        total_cost = 0
+
         for product, amount in product_cart.items():
             cost = self.products[product] * amount
-            formatted_cost = f"{cost:.1f}" if cost % 1 != 0 else f"{int(cost)}"  # noqa: E231, E501
+            formatted_cost = (f"{round(cost, 1)}" if cost % 1 != 0
+                              else f"{int(cost)}")
             print(f"{amount} {product}s for {formatted_cost} dollars")
-            total_cost += cost
-        print(f"Total cost is {total_cost:.1f} dollars")  # noqa: E231
+
+        total_cost = self.calculate_product_cost(product_cart)
+        print(f"Total cost is {round(total_cost, 1)} dollars")
         print("See you again!\n")

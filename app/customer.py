@@ -27,10 +27,10 @@ class Customer:
                                   shop: Shop,
                                   fuel_price: float) -> float:
         distance = self.distance_to(shop.location)
-        fuel_cost_to_shop = self.car.calculate_fuel_cost(distance, fuel_price)
-        fuel_cost_to_home = self.car.calculate_fuel_cost(distance, fuel_price)
+        fuel_cost_to_road = (self.car.calculate_fuel_cost(distance, fuel_price)
+                             * 2)
         product_cost = shop.calculate_product_cost(self.product_cart)
-        return fuel_cost_to_shop + fuel_cost_to_home + product_cost
+        return fuel_cost_to_road + product_cost
 
     def buy_products(self, shop: Shop, fuel_price: float) -> None:
         total_trip_cost = self.calculate_total_trip_cost(shop, fuel_price)
@@ -41,7 +41,7 @@ class Customer:
             self.money -= total_trip_cost
             print(f"{self.name} rides home")
             self.location = [0, 0]
-            print(f"{self.name} now has {self.money:.2f} dollars\n")  # noqa: E231, E501
+            print(f"{self.name} now has {round(self.money, 2)} dollars\n")
         else:
             print(f"{self.name} doesn't have enough money "
                   f"to make a purchase in any shop")

@@ -22,7 +22,7 @@ def shop_trip() -> None:
         for shop in shops:
             trip_cost = customer.calculate_total_trip_cost(shop, fuel_price)
             print(f"{customer.name}'s trip to the "
-                  f"{shop.name} costs {trip_cost:.2f}")  # noqa: E231
+                  f"{shop.name} costs {round(trip_cost, 2)}")
             if trip_cost < cheapest_cost:
                 cheapest_cost = trip_cost
                 best_shop = shop
